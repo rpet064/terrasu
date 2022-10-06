@@ -20,11 +20,25 @@
 
     $response = json_decode($response, true);
 
-    foreach ($response['results'] as $items)
-{
-    echo 'Address: '.$items['category'];
-}
+$question_no = 0;
+$current_score = 0;
+while ($question_no < 10){
+    $current_question = array($response['results'][$question_no]['question']);
+    array_push($current_question, $response['results'][$question_no]['correct_answer'],$question_no, $current_score);
+    $question_no++;
+    if ($question_no < 10){
+        print_r($current_question);
+    } else {
+        return 'Congratulat ions, you have completed the game. Refresh the page to play again';
+    }
+    
+} 
 
+
+// foreach ($response['results'] as $items)
+// {
+//     return $items['question'];
+// }
 
 
 
