@@ -20,19 +20,11 @@
 
     $response = json_decode($response, true);
 
-$question_no = 0;
-$current_score = 0;
-while ($question_no < 10){
-    $current_question = array($response['results'][$question_no]['question']);
-    array_push($current_question, $response['results'][$question_no]['correct_answer'],$question_no, $current_score);
-    $question_no++;
-    if ($question_no < 10){
-        print_r($current_question);
-    } else {
-        return 'Congratulat ions, you have completed the game. Refresh the page to play again';
-    }
-    
-} 
+// Send Api Data to client side
+foreach ($response['results'] as $items)
+{
+    var_dump($items);
+}
 
 
 // foreach ($response['results'] as $items)
