@@ -25,5 +25,4 @@ foreach ($response['results'] as $items)
   $answer = $items['correct_answer'];
   $question = $items['question'];
 }
-// var_dump($question, $answer);
  ?>
