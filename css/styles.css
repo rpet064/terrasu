@@ -1,0 +1,9 @@
+body * {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    z-index: -1
+  }
+
+.reset-btn {
+  background-color: red;
+}

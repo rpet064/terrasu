@@ -1,9 +1,13 @@
+
+
 <?php
 $header = include('header.php');
 ?>
 <div>
+  <!-- stylesheet -->
+<style><?php include('./css/styles.css'); ?></style>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 function checkfunction(obj){
   $.post("your_url.php",$(obj).serialize(),function(data){
    alert("success");
@@ -12,6 +16,8 @@ function checkfunction(obj){
    }
 
 </script>
+
+<button>Click me </button>
 
 <?php
 
@@ -55,27 +61,27 @@ if (! isset($_SESSION["counter"]) ){
 }
   ?>
   <br/><br/>
-  <?php echo 'Question ' . $_SESSION['counter']; ?>
-  <?php echo 'Your Score is ' . $_SESSION['score']; ?>
+  <h3><?php echo 'Question ' . $_SESSION['counter']; ?></h3>
+  <h3><?php echo 'Your Score is ' . $_SESSION['score']; ?></h3>
   <br/><br/>
 
   
   <form  onsubmit="return checkfunction(this)" method="post">
-  <input type="submit" name="True"
+  <input class='true-btn' type="submit" name="True"
                value="True" onclick="return checkfunction(this)"/>
          
- <input type="submit" name="False"
+ <input class='false-btn'type="submit" name="False"
                value="False" onclick="return checkfunction(this)"/>
 
-  <input type="submit" name="reset" value="Reset" onclick="return checkfunction(this)"/>
+  <input class='reset-btn'type="submit" name="reset" value="Reset" onclick="return checkfunction(this)"/>
  </form>
 
 </div>
 <!-- stop page reload after form submission -->
-<script>
+<!-- <script>
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
     }
-</script>
+</script> -->
 </body>
 </html>
