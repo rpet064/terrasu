@@ -5,11 +5,14 @@ include('header.php');
 include('navbar.php');
 session_start();
 $_SESSION["begin"] = true;
-$_SESSION["header_1"] = null;
-$_SESSION["header_2"] = null;
+$_SESSION["header_1"] = 'Welcome to Terrasu, a PHP Geography Quiz Game';
+$_SESSION["header_2"] = 'Please press begin to start';
+
 ?>
   <!-- stylesheet -->
   <style><?php include('./css/styles.css'); ?></style>
+  <!-- background image -->
+  <img src="https://picsum.photos/700/435" />
 
   <!-- post data to sever -->
   <!-- <script type="text/javascript"> 
@@ -28,7 +31,9 @@ $_SESSION["header_2"] = null;
     }
 </script>
 <!-- main container component  -->
-<div class='middle-container'>
+<div class='card'>
+  <h3> <?=  $_SESSION["header_1"] ?> </h3>
+  <h3> <?=  $_SESSION["header_2"] ?> </h3>
 
 <!-- handle api data -->
   <?php
@@ -73,20 +78,15 @@ $_SESSION["header_2"] = null;
 
   if (! isset($_POST["begin"]) ){
     $_SESSION["begin"] = false;
-    $_SESSION["header_1"] = 'Welcome to Terrasu, a PHP Geography Quiz Game';
-    $_SESSION["header_2"] = 'Please press begin to start';
+    $_SESSION["header_1"] = null;
+    $_SESSION["header_2"] = null;
      }
   ?>
 
-    <h1> <?=  $_SESSION["header_1"] ?> </h1>
-    <h1> <?=  $_SESSION["header_2"] ?> </h1>
-
-    <!-- background image -->
-    <!-- <img src="https://picsum.photos/650/400" /> -->
     <!-- scoreboard -->
     <br/><br/>
-    <h3><?=  'Question ' . $_SESSION['counter']; ?></h3>
-    <h3><?= 'Your Score is ' . $_SESSION['score']; ?></h3>
+    <h5><?=  'Question ' . $_SESSION['counter']; ?></h5>
+    <h5><?= 'Your Score is ' . $_SESSION['score']; ?></h5>
     <br/><br/>
 
   <!-- form for user guess -->

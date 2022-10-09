@@ -1,5 +1,5 @@
 <footer>
-    <p>© Copyright <script>new Date().getFullYear()</script>Robert Pether</p>
+    <p>© <?php echo date("Y"); ?> Copyright Robert Pether. </p>
 </footer>
 
 </body>

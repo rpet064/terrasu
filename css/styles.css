@@ -22,8 +22,8 @@ input{
 img{
   z-index: -1;
   position: absolute;
-  right: 26%;
-  top: 15%;
+  right: 22%;
+  top: 11%;
 }
 
 /* header */
@@ -31,10 +31,6 @@ img{
 header {
   background-color: #CFFF8D;
   height: 20%;
-}
-
-nav {
-  background-color: #CFFF8D;
 }
 
 .logo {
@@ -66,6 +62,19 @@ nav {
 
 /* middle-container */
 
+.card{
+  box-shadow: 0 0 15px rgba(0,0,0,0.07);
+  margin: 1rem 0;
+  border-radius: 1rem;
+  position: relative;
+  left: 26.5%;
+  top: 35px;
+  width: 50%;
+  height: auto;
+  background-color: white;
+  z-index: 1;
+}
+
 /* .middle-container{
   padding-top: 10%;
 } */
@@ -75,7 +84,13 @@ nav {
 
 footer{
   margin-top: auto;
-   border-top: 1px solid;
+   background-color: #CFFF8D;
+   height: 3rem;
+}
+
+footer p{
+  padding-top: 0.01%;
+  font-size: 0.8rem;
 }
 
 /* .reset-btn {
