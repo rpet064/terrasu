@@ -3,6 +3,10 @@
 <?php
 include('header.php');
 include('navbar.php');
+session_start();
+$_SESSION["begin"] = true;
+$_SESSION["header_1"] = null;
+$_SESSION["header_2"] = null;
 ?>
   <!-- stylesheet -->
   <style><?php include('./css/styles.css'); ?></style>
@@ -32,16 +36,9 @@ include('navbar.php');
   $question_data = include('api.php');
   ob_get_clean();
   echo $question . ' True or False?';
-  session_start();
-
-    // begin session
-    if (! isset($_SESSION["begin"]) ){
-      $_SESSION["begin"] = True;
-      echo $_SESSION["begin"];
-      }
 
     // reset score for a new session
-  if (! isset($_SESSION["counter"]) ){
+  if (! isset($_POST["counter"]) ){
     $_SESSION["counter"] = 1;
     $_SESSION['score'] = 0;
     }
@@ -69,34 +66,32 @@ include('navbar.php');
     }
 
     // reset counter
-    if(isset($_POST['reset'])) {
+  if(isset($_POST['reset'])) {
     $_SESSION['counter'] = 1;
     $_SESSION['score'] = 0;
-  }
-    ?>
+  }    
 
-<?php if ($_SESSION["begin"] != True){ ?>
-    <div>
-    <h1>Welcome to Terrasu, a PHP Geography Quiz Game</h1>
-    <h1>There are ten questions. Are you ready?</h1>
-  </div>
-  <?php } else { ?>
-    <h1>let's Begin</h1>
-    <?php } ?>
+  if (! isset($_POST["begin"]) ){
+    $_SESSION["begin"] = false;
+    $_SESSION["header_1"] = 'Welcome to Terrasu, a PHP Geography Quiz Game';
+    $_SESSION["header_2"] = 'Please press begin to start';
+     }
+  ?>
 
-  <!-- background image -->
-  <img src="https://picsum.photos/400/600" />
+    <h1> <?=  $_SESSION["header_1"] ?> </h1>
+    <h1> <?=  $_SESSION["header_2"] ?> </h1>
 
-  <!-- scoreboard -->
+    <!-- background image -->
+    <!-- <img src="https://picsum.photos/650/400" /> -->
+    <!-- scoreboard -->
     <br/><br/>
-    <h3><?php echo 'Question ' . $_SESSION['counter']; ?></h3>
-    <h3><?php echo 'Your Score is ' . $_SESSION['score']; ?></h3>
+    <h3><?=  'Question ' . $_SESSION['counter']; ?></h3>
+    <h3><?= 'Your Score is ' . $_SESSION['score']; ?></h3>
     <br/><br/>
 
   <!-- form for user guess -->
   <form  onsubmit="return checkfunction(this)" method="post">
 
-  <?php if ($_SESSION["begin"] == True){ ?>
     <div>
       <input class='true-btn' type="submit" name="True"
                   value="True" onclick="return checkfunction(this)"/>
@@ -106,11 +101,8 @@ include('navbar.php');
 
       <input class='reset-btn' type="submit" name="reset" value="Reset" onclick="return checkfunction(this)"/>
   </div>
-  <?php } else { ?>
-    <input class='begin-button' type="submit" name="begin" value="begin" onclick="return checkfunction(this)" />
-    <?php } ?>
+    <input class='begin-button' type="submit" name="begin" value="begin" onclick="return checkfunction(this)" /> 
   </form>
-
   </div>
 
 <?php

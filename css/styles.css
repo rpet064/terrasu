@@ -21,7 +21,9 @@ input{
 
 img{
   z-index: -1;
-  position: relative;
+  position: absolute;
+  right: 26%;
+  top: 15%;
 }
 
 /* header */
