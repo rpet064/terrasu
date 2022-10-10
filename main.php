@@ -1,14 +1,18 @@
 
 
 <?php
-include('header.php');
-include('navbar.php');
-session_start();
-$_SESSION["begin"] = true;
-$_SESSION["header_1"] = 'Welcome to Terrasu, a PHP Geography Quiz Game';
-$_SESSION["header_2"] = 'Please press begin to start';
-
+  include('header.php');
+  include('navbar.php');
+  require("api.php");
 ?>
+
+<script>
+  var $answers = [];
+  var $questions = [];
+</script>
+
+
+
   <!-- stylesheet -->
   <style><?php include('./css/styles.css'); ?></style>
   <!-- background image -->
@@ -24,7 +28,47 @@ $_SESSION["header_2"] = 'Please press begin to start';
     }
   </script> -->
 
-  <!-- stop page reload after form submission -->
+  <!-- control transition from beginning screen to question 1-->
+  <script>
+  $(document).ready(function(){
+    $('#begin-button').click(function(event){  
+      event.preventDefault()
+      $('form[name="game-form"]').show();
+      $('div#question-container').show()
+      $('button#begin-button').hide();
+      $('h3[name="greet-title"]').hide();
+   });
+  });
+  </script>
+
+    <!-- control transition from question 1 - 10 -->
+    <script>
+  $(document).ready(function(){
+    $('#reset-btn').click(function(event){
+      event.preventDefault()
+      alert('this is the reset button')
+   });
+  });
+  </script>
+
+<script>
+  $(document).ready(function(){
+    $('#false-btn').click(function(event){
+      event.preventDefault()
+      alert('this is the false button')
+   });
+  });
+  </script>
+
+<script>
+  $(document).ready(function(){
+    $('#true-btn').click(function(event){
+      event.preventDefault()
+      alert('this is the true button')
+   });
+  });
+  </script>
+
 <script>
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
@@ -32,79 +76,60 @@ $_SESSION["header_2"] = 'Please press begin to start';
 </script>
 <!-- main container component  -->
 <div class='card'>
-  <h3> <?=  $_SESSION["header_1"] ?> </h3>
-  <h3> <?=  $_SESSION["header_2"] ?> </h3>
+  <h3 name='greet-title' > Welcome to Terrasu, a PHP Geography Quiz Game </h3>
+  <h3 name='greet-title'> Please press begin to start </h3>
 
 <!-- handle api data -->
-  <?php
-  ob_start();
-  $question_data = include('api.php');
-  ob_get_clean();
-  echo $question . ' True or False?';
+  <div style="display:none" id='question-container'>
+  <p>Question 1</p>
+  <p>Score 0</p>
 
-    // reset score for a new session
-  if (! isset($_POST["counter"]) ){
-    $_SESSION["counter"] = 1;
-    $_SESSION['score'] = 0;
-    }
+  <script>
+    var answerData = <?PHP
+        echo json_encode($answers);
+      ?>
 
-    // check if user True guess match correct answer
-    if(
-      isset($_POST['True'])) {
-        ++$_SESSION['counter'];
-        if ($answer == $_POST['True'] ){
-          ++$_SESSION['score'];
-        } else {
-          echo 'Sorry that answer was False';
-        }
-    }
+    var questionData = <?PHP
+        echo json_encode($questions);
+        ?>
 
-        // check if user False guess match correct answer
-    if(
-      isset($_POST['False'])) {
-        ++$_SESSION['counter'];
-        if ($answer == $_POST['False'] ){
-          ++$_SESSION['score'];
-        } else {
-          echo 'Sorry that one was True';
-        }
-    }
+    // questionData = jQuery.map( questionData, function( item, i ) {
+    //   return ('<p>' + item + ' True or False? </p>');
+    // });
+      // questionData = jQuery.map( questionData, function( item, i ) {
+      //   $("ol").append(`<li>${item}</li>`);
 
-    // reset counter
-  if(isset($_POST['reset'])) {
-    $_SESSION['counter'] = 1;
-    $_SESSION['score'] = 0;
-  }    
+      document.getElementById('question-container').innerHTML = questionData.map(item => 
+    `<div>
+      <div class='question-header'>${item}</div>
+    </div>`
+).join('')
 
-  if (! isset($_POST["begin"]) ){
-    $_SESSION["begin"] = false;
-    $_SESSION["header_1"] = null;
-    $_SESSION["header_2"] = null;
-     }
-  ?>
 
+</script>
     <!-- scoreboard -->
-    <br/><br/>
-    <h5><?=  'Question ' . $_SESSION['counter']; ?></h5>
-    <h5><?= 'Your Score is ' . $_SESSION['score']; ?></h5>
-    <br/><br/>
+  </div>  
 
   <!-- form for user guess -->
-  <form  onsubmit="return checkfunction(this)" method="post">
-
+  <form style="display:none" name='game-form' onsubmit="return checkfunction(this)" method="post">
     <div>
-      <input class='true-btn' type="submit" name="True"
-                  value="True" onclick="return checkfunction(this)"/>
+      <input id='true-btn' type="submit" name="true"
+                  value="true" onclick="return checkfunction(this)"/>
             
-    <input class='false-btn'type="submit" name="False"
-                  value="False" onclick="return checkfunction(this)"/>
+    <input id='false-btn' type="submit" name="false"
+                  value="false" onclick="return checkfunction(this)"/>
 
-      <input class='reset-btn' type="submit" name="reset" value="Reset" onclick="return checkfunction(this)"/>
+      <input id='reset-btn' type="submit" name="reset" value="Reset" onclick="return checkfunction(this)"/>
   </div>
-    <input class='begin-button' type="submit" name="begin" value="begin" onclick="return checkfunction(this)" /> 
   </form>
   </div>
 
+<button
+    id='begin-button'
+    name="begin"
+    value="begin"
+ >Click me</button>
+
 <?php
-$header = include('footer.php');
+$header = include('footer.php');  
 ?>

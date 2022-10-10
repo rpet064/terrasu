@@ -10,6 +10,10 @@ body{
     padding: 0%;
   }
 
+  .question-header{
+    color: red;
+  }
+
 input{
   width: 6.5rem;
   height: 3.25rem;
@@ -68,16 +72,21 @@ header {
   border-radius: 1rem;
   position: relative;
   left: 26.5%;
-  top: 35px;
   width: 50%;
   height: auto;
   background-color: white;
   z-index: 1;
 }
 
-/* .middle-container{
-  padding-top: 10%;
-} */
+#target {
+  height: 100px;
+  width: 100px;
+  background: red;
+}
+
+.hidden{
+  display: none;
+}
 
 
 /* footer */
