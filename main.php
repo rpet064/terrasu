@@ -2,8 +2,8 @@
 <?php
   include('header.php');
   include('navbar.php');
-  require("api.php");
-  require("test.php")
+  include("api.php");
+  include("test.php");
 ?>
 
 <!-- global variables & functions for game state -->
@@ -13,11 +13,6 @@
   var questionCounter = 0;
   var scoreCounter = 0;
 
-  function getRandomNumber(){
-    var min = 9;
-    var max = 32;
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
 
   function updateScore(){
     document.getElementById("question-counter").innerHTML = `Question ${questionCounter+1}`;
@@ -134,30 +129,29 @@
   <h3 name='greet-title'> Please press begin to start </h3>
   <div id='select-container'>
     <select name="dropdown" id="dropdown" class="classic">
-
       <!-- map dropbox data onto select-container -->
     <script>
       var quizDataOptions = <?PHP
-        echo json_encode($option_data['categories'])?>;
+        echo json_encode($option_data['categories']) ?>;
         var quizData = document.getElementById('dropdown').innerHTML = quizDataOptions.map(
           item => 
         `<option value=${item['category']}>${item['categoryName']}</option>`
             ).join('');
       </script> 
     </select>
-    <form action="" method="post">
-    <button
-        id='lucky-btn'
-        class='begin-btn'
-        name="lucky-btn"
-        value={getRandomNumber()}
-    >I'm Feeling Lucky</button>
-    <button
-        id='begin-btn'
-        class='begin-btn'
-        name="begin-btn"
-        value='20'
-    >Begin</button>
+    <form action="api.php" method="post">
+    <input
+      type="submit"
+      id='lucky-btn'
+      class='begin-btn'
+      name="lucky-btn"
+      value="I'm Feeling Lucky"/>
+    <input
+      type="submit"
+      id='begin-btn'
+      class='begin-btn'
+      name="begin-btn"
+      value='Begin'/>
     </form />
     </div>
   <!-- scoreboard -->
