@@ -1,5 +1,12 @@
 <?php
-    $curl = curl_init();
+
+  // $name = $_POST['name'];
+  // $value = $_POST['value'];
+
+  // echo $name ;
+  // echo $value ;
+  
+  $curl = curl_init();
 
     curl_setopt_array($curl, array(
       CURLOPT_URL => "https://opentdb.com/api.php?amount=10&category=22&type=boolean",
@@ -19,15 +26,14 @@
     curl_close($curl);
 
     $response = json_decode($response, true);
-    // Send Api Data to client side
+  
+  // Send API Data to client side as answer & question arrays
+  $answers = array();
+  $questions = array();
+  foreach ($response['results'] as $items)
+  {
+    $answers[] = $items['correct_answer'];
+    $questions[] = $items['question'];
 
-    
-$answers = array();
-$questions = array();
-foreach ($response['results'] as $items)
-{
-  $answers[] = $items['correct_answer'];
-  $questions[] = $items['question'];
-
-}
+  }
  ?>

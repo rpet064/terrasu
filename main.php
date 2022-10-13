@@ -1,21 +1,38 @@
-
-
+<!-- file imports -->
 <?php
   include('header.php');
   include('navbar.php');
   require("api.php");
+  require("test.php")
 ?>
 
+<!-- global variables & functions for game state -->
 <script>
-  var $answers = [];
-  var $questions = [];
+  var answers = [];
+  var questions = [];
+  var questionCounter = 0;
+  var scoreCounter = 0;
+
+  function getRandomNumber(){
+    var min = 9;
+    var max = 32;
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  function updateScore(){
+    document.getElementById("question-counter").innerHTML = `Question ${questionCounter+1}`;
+    document.getElementById("score-counter").innerHTML = `Your score is ${scoreCounter}`;
+  }
+
+  function endGame(){
+    $('div[name="game-form"]').hide();
+    $('div#question-container').hide();
+    alert('Game is finished. Your score is ' + scoreCounter);
+  }
 </script>
-
-
-
-  <!-- stylesheet -->
+  
+<!-- stylesheet & background image -->
   <style><?php include('./css/styles.css'); ?></style>
-  <!-- background image -->
   <img src="https://picsum.photos/700/435" />
 
   <!-- post data to sever -->
@@ -28,43 +45,79 @@
     }
   </script> -->
 
-  <!-- control transition from beginning screen to question 1-->
+  <!-- control begin screen to game transition -->
   <script>
   $(document).ready(function(){
-    $('#begin-button').click(function(event){  
+    $('.begin-btn').click(function(event){
       event.preventDefault()
-      $('form[name="game-form"]').show();
-      $('div#question-container').show()
+      $('div[name="game-form"]').show();  
+      $('div#question-container').show();
+      $('div#scoreboard').show();
+      $(`div#${questionCounter}`).show();
       $('button#begin-button').hide();
       $('h3[name="greet-title"]').hide();
+      $('div#select-container').hide();
+      $("#class-div").attr("class", "game-card");
    });
   });
   </script>
 
-    <!-- control transition from question 1 - 10 -->
-    <script>
+  <!-- control game reset -->
+  <script>
   $(document).ready(function(){
     $('#reset-btn').click(function(event){
-      event.preventDefault()
-      alert('this is the reset button')
+      window.location.reload();
    });
   });
   </script>
 
+  <!-- control user false answer guess -->
 <script>
   $(document).ready(function(){
     $('#false-btn').click(function(event){
       event.preventDefault()
-      alert('this is the false button')
+        // change question
+      $(`div#${questionCounter}`).hide();
+      $(`div#${questionCounter+1}`).show();
+      // check if user answer matches correct answer
+      if (answerData[questionCounter] == "False"){
+          alert('you got it right');
+          scoreCounter++;
+        } else{
+          alert('Sorry it was true');
+        }
+        if (questionCounter == 9){
+          endGame();
+      } else {
+        questionCounter++;
+        updateScore();
+      }
    });
   });
   </script>
 
+  <!-- control true answer guess -->
 <script>
   $(document).ready(function(){
     $('#true-btn').click(function(event){
       event.preventDefault()
-      alert('this is the true button')
+      // change question
+      $(`div#${questionCounter}`).hide();
+      $(`div#${questionCounter+1}`).show();
+      // check if user answer matches correct answer
+        if (answerData[questionCounter] == "True"){
+          alert('you got it right');
+          scoreCounter++;
+        } else{
+          alert('Sorry it was false');
+        }
+        // check if last question
+        if (questionCounter == 9){
+          endGame();
+      } else{
+        questionCounter++;
+        updateScore();
+      }
    });
   });
   </script>
@@ -74,62 +127,82 @@
         window.history.replaceState( null, null, window.location.href );
     }
 </script>
+
 <!-- main container component  -->
-<div class='card'>
+<div id="class-div" class='card'>
   <h3 name='greet-title' > Welcome to Terrasu, a PHP Geography Quiz Game </h3>
   <h3 name='greet-title'> Please press begin to start </h3>
+  <div id='select-container'>
+    <select name="dropdown" id="dropdown" class="classic">
 
-<!-- handle api data -->
+      <!-- map dropbox data onto select-container -->
+    <script>
+      var quizDataOptions = <?PHP
+        echo json_encode($option_data['categories'])?>;
+        var quizData = document.getElementById('dropdown').innerHTML = quizDataOptions.map(
+          item => 
+        `<option value=${item['category']}>${item['categoryName']}</option>`
+            ).join('');
+      </script> 
+    </select>
+    <form action="" method="post">
+    <button
+        id='lucky-btn'
+        class='begin-btn'
+        name="lucky-btn"
+        value={getRandomNumber()}
+    >I'm Feeling Lucky</button>
+    <button
+        id='begin-btn'
+        class='begin-btn'
+        name="begin-btn"
+        value='20'
+    >Begin</button>
+    </form />
+    </div>
+  <!-- scoreboard -->
+  <div style="display:none" id="scoreboard">
+    <h5 id="question-counter">Question 1</h5> 
+    <h5 id="score-counter">Your score is 0</h5> 
+  </div>
+
+  <!-- question container -->
   <div style="display:none" id='question-container'>
-  <p>Question 1</p>
-  <p>Score 0</p>
-
   <script>
+    // import answer api data from php sever echo into js variable
     var answerData = <?PHP
         echo json_encode($answers);
-      ?>
-
+      ?>;
+    // import question api data from php sever echo into js variable
     var questionData = <?PHP
         echo json_encode($questions);
-        ?>
-
-    // questionData = jQuery.map( questionData, function( item, i ) {
-    //   return ('<p>' + item + ' True or False? </p>');
-    // });
-      // questionData = jQuery.map( questionData, function( item, i ) {
-      //   $("ol").append(`<li>${item}</li>`);
-
-      document.getElementById('question-container').innerHTML = questionData.map(item => 
-    `<div>
-      <div class='question-header'>${item}</div>
-    </div>`
-).join('')
-
-
-</script>
-    <!-- scoreboard -->
+        ?>;
+    // map all question data into seperate divs
+    const questionArray = document.getElementById('question-container').innerHTML = questionData.map(
+      (item, index) => 
+   `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
+        ).join('')
+  </script> 
   </div>  
 
-  <!-- form for user guess -->
-  <form style="display:none" name='game-form' onsubmit="return checkfunction(this)" method="post">
-    <div>
-      <input id='true-btn' type="submit" name="true"
-                  value="true" onclick="return checkfunction(this)"/>
+  <!-- form for users to share answers, reset game & post data when game is finished -->
+    <div style="display:none" name='game-form'>
+      <button id='true-btn' type="submit" name="true"
+                  value="true"> True </button>
             
-    <input id='false-btn' type="submit" name="false"
-                  value="false" onclick="return checkfunction(this)"/>
-
-      <input id='reset-btn' type="submit" name="reset" value="Reset" onclick="return checkfunction(this)"/>
+    <button id='false-btn' type="submit" name="false"
+                  value="false"> False </button>
+    
+      <button id='reset-btn' type="submit" name="reset" 
+      value="Reset" > Reset </button>
   </div>
-  </form>
+  </div>
   </div>
 
-<button
-    id='begin-button'
-    name="begin"
-    value="begin"
- >Click me</button>
+  <!-- button to play again -->
+ <!-- <button id='reset-btn' type="submit" name="reset" 
+      value="Reset" > Reset </button> -->
 
 <?php
-$header = include('footer.php');  
+$header = include('footer.php');
 ?>
