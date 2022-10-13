@@ -6,13 +6,40 @@
   include("test.php");
 ?>
 
+<!-- functions for greeting screen to game state transition -->
+<script>
+function getOptionValue(){
+    // checks if chosen option is null (no user selection)
+    if ($('#dropdown :selected').attr('value') != null){
+      var selectnCategoryNo = $('#dropdown :selected').attr('value')
+    } else {
+      var selectnCategoryNo = 22;
+    }
+    $("#begin-btn").attr("name", selectnCategoryNo);
+  }
+
+    // hide greeting screen elements
+    function hideElements(){
+      $('button#begin-button').hide();
+      $('h3[name="greet-title"]').hide();
+      $('div#select-container').hide();
+    }
+
+    // show game elements in
+    function showElements(){
+      $('div[name="game-form"]').show();  
+      $('div#question-container').show();
+      $('div#scoreboard').show();
+      $(`div#${questionCounter}`).show();
+    }
+</script>
+
 <!-- global variables & functions for game state -->
 <script>
   var answers = [];
   var questions = [];
   var questionCounter = 0;
   var scoreCounter = 0;
-
 
   function updateScore(){
     document.getElementById("question-counter").innerHTML = `Question ${questionCounter+1}`;
@@ -45,13 +72,9 @@
   $(document).ready(function(){
     $('.begin-btn').click(function(event){
       event.preventDefault()
-      $('div[name="game-form"]').show();  
-      $('div#question-container').show();
-      $('div#scoreboard').show();
-      $(`div#${questionCounter}`).show();
-      $('button#begin-button').hide();
-      $('h3[name="greet-title"]').hide();
-      $('div#select-container').hide();
+      hideElements();
+      showElements();
+      getOptionValue();
       $("#class-div").attr("class", "game-card");
    });
   });
@@ -140,19 +163,21 @@
       </script> 
     </select>
     <form action="api.php" method="post">
-    <input
-      type="submit"
-      id='lucky-btn'
-      class='begin-btn'
-      name="lucky-btn"
-      value="I'm Feeling Lucky"/>
-    <input
-      type="submit"
-      id='begin-btn'
-      class='begin-btn'
-      name="begin-btn"
-      value='Begin'/>
-    </form />
+        <input
+          type="submit"
+          id='begin-btn'
+          class='begin-btn'
+          name="22"
+          value='Begin'/>
+      </form />
+      <form action="api.php" method="post">
+        <input
+          type="submit"
+          id='lucky-btn'
+          class='begin-btn'
+          name="lucky-btn"
+          value="Feeling Lucky"/>
+        </form>
     </div>
   <!-- scoreboard -->
   <div style="display:none" id="scoreboard">
@@ -189,7 +214,7 @@
     
       <button id='reset-btn' type="submit" name="reset" 
       value="Reset" > Reset </button>
-  </div>
+    </div>
   </div>
   </div>
 

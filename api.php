@@ -6,56 +6,53 @@ function getRandomNumber(){
 }
 
 // check for post
-if (isset($_POST['name'])){
-  $name = $_POST['name'];
-  // lucky btn choose random category & add to url
-  if ($name == "lucky-btn"){
-    $ran_no = getRandomNumber();
-    $url = "https://opentdb.com/api.php?amount=10&category={$ran_no}&type=boolean";
-    error_log(print_r($name, true));
-    error_log(print_r($url, true));
+if (isset($_POST['value'])){
+  $value = $_POST['value'];
+  // lucky btn choose random category for url
+  if ($value == "Feeling Lucky"){
+    $category_no = getRandomNumber();
+    error_log(print_r($value, true));
+
     // begin button add user chosen category to url
-  } else if ($name == "begin-btn"){
-    $category_no = $_POST['value'];
-    $url = "https://opentdb.com/api.php?amount=10&category={$category_no}&type=boolean";
+  } else if ($value == "Begin"){
+    $category_no = $_POST['name'];
     error_log(print_r($category_no, true));
-    error_log(print_r($url, true));
   } else {
     error_log("Oops something's gone wrong");
   }
 }
 
+// check $category_no != null
+if (isset($category_no)){
+  $curl = curl_init();
 
-
-  
-  // $curl = curl_init();
-
-  //   curl_setopt_array($curl, array(
-  //     CURLOPT_URL => "https://opentdb.com/api.php?amount=10&category=22&type=boolean",
-  //     CURLOPT_RETURNTRANSFER => true,
-  //     CURLOPT_TIMEOUT => 30,
-  //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  //     CURLOPT_CUSTOMREQUEST => "GET",
-  //     CURLOPT_HTTPHEADER => array(
-  //       "cache-control: no-cache"
-  //     ),
-  //   ));
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://opentdb.com/api.php?amount=10&category={$category_no}&type=boolean",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => array(
+        "cache-control: no-cache"
+      ),
+    ));
     
-  //   $response = curl_exec($curl);
+    $response = curl_exec($curl);
 
-  //   $err = curl_error($curl);
+    $err = curl_error($curl);
     
-  //   curl_close($curl);
+    curl_close($curl);
 
-  //   $response = json_decode($response, true);
+    $response = json_decode($response, true);
   
-  // // Send API Data to client side as answer & question arrays
-  // $answers = array();
-  // $questions = array();
-  // foreach ($response['results'] as $items)
-  // {
-  //   $answers[] = $items['correct_answer'];
-  //   $questions[] = $items['question'];
+  // Send API Data to client side as answer & question arrays
+  $answers = array();
+  $questions = array();
+  foreach ($response['results'] as $items)
+  {
+    $answers[] = $items['correct_answer'];
+    $questions[] = $items['question'];
 
-  // }
+  }
+}
  ?>
