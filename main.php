@@ -3,7 +3,7 @@
   include('header.php');
   include('navbar.php');
   require("api.php");
-  require("test.php");
+  require("quizOptions.php");
 ?>
 
 <!-- functions for greeting screen to game state transition -->
@@ -31,9 +31,7 @@
     var e = document.getElementById("dropdown");
     if (e != null){
     var value = e.value;
-    } else {
-      value = ""
-    }
+    } 
     return {categoryNo: value}
   }
 
@@ -52,10 +50,9 @@
 
 <!-- global variables & functions for game state -->
 <script>
-  var answers = [];
-  var questions = [];
-  var questionCounter = 0;
-  var scoreCounter = 0;
+  var answers, questions = [];
+  var questionCounter, scoreCounter = 0;
+  var answerData, questionData = "";
 
   function updateScore(){
     document.getElementById("question-counter").innerHTML = `Question ${questionCounter+1}`;
@@ -83,15 +80,26 @@
     }
   </script> -->
 
-  <!-- control begin screen to game transition -->
+  <!-- submit-btn control begin screen to game transition -->
   <script>
   $(document).ready(function(){
     $('.begin-btn').click(function(event){
       event.preventDefault()
-      console.log(event);
       hideElements();
       showElements();
       var selectedData = getSelectData();
+      postData(selectedData);
+   });
+  });
+
+  // lucky-btn control begin screen to game transition
+  $(document).ready(function(){
+    $('.lucky-btn').click(function(event){
+      event.preventDefault()
+      hideElements();
+      showElements();
+      // json blank so sever knows to insert random number
+      var selectedData = {categoryNo: ""}
       postData(selectedData);
    });
   });
@@ -208,18 +216,22 @@
   <div style="display:none" id='question-container'>
   <script>
     // import answer api data from php sever echo into js variable
-    var answerData = <?PHP
-        echo json_encode($answers);
-      ?>;
-    // import question api data from php sever echo into js variable
-    var questionData = <?PHP
-        echo json_encode($questions);
+    while (answerData === "" && questionData === ""){
+      var answerData = <?PHP
+          echo json_encode($answers);
         ?>;
-    // map all question data into seperate divs
-    const questionArray = document.getElementById('question-container').innerHTML = questionData.map(
+      // import question api data from php sever echo into js variable
+      var questionData = <?PHP
+          echo json_encode($questions);
+          ?>;
+      if (answerData !== "" && questionData !== ""){
+        const questionArray = document.getElementById('question-container').innerHTML = questionData.map(
       (item, index) => 
-   `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
-        ).join('')
+      `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
+            ).join('')
+      }
+    }
+    // map all question data into seperate divs
   </script> 
   </div>  
 

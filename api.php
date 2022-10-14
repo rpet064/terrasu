@@ -1,39 +1,41 @@
 <?php
+
 function getRandomNumber(){
   $min = 9;
   $max = 32;
   return rand($min, $max);
 }
 
-$category_no = "";
-
-// check for post
-if (isset($_POST['categoryNo'])){
-  $category_no = $_POST['categoryNo'];
-  // lucky btn choose random category for url
-  if ($category_no == ""){
-    $category_no = getRandomNumber();
-  }
+if(empty($_SERVER['CONTENT_TYPE']))
+{ 
+  $_SERVER['CONTENT_TYPE'] = "application/x-www-form-urlencoded"; 
 }
 
-error_log($category_no, true);
-
-// check $category_no != null
-if (isset($category_no)){
+if (isset($_POST['categoryNo'])) {
   $curl = curl_init();
+  $category_no = array();
+// check for post
+  echo "post recieved";
+  $json  = $_POST["categoryNo"];
+  $category_no  = json_decode($json, true);
+  // lucky btn choose random category for url
+  if ($category_no === ""){
+      $category_no = getRandomNumber();
+    } 
+  print_r("https://opentdb.com/api.php?amount=10&category={$category_no}&type=boolean", true);
 
-    curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://opentdb.com/api.php?amount=10&category={$category_no}&type=boolean",
-      CURLOPT_RETURNTRANSFER => true,
-      CURLOPT_TIMEOUT => 30,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_CUSTOMREQUEST => "GET",
-      CURLOPT_HTTPHEADER => array(
-        "cache-control: no-cache"
-      ),
-    ));
-    
-    $response = curl_exec($curl);
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://opentdb.com/api.php?amount=10&category={$category_no}&type=boolean",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_HTTPHEADER => array(
+      "cache-control: no-cache"
+    ),
+  ));
+  
+  $response = curl_exec($curl);
 
     $err = curl_error($curl);
     
@@ -50,5 +52,6 @@ if (isset($category_no)){
     $questions[] = $items['question'];
 
   }
+  
 }
  ?>
