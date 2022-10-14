@@ -5,22 +5,18 @@ function getRandomNumber(){
   return rand($min, $max);
 }
 
-// check for post
-if (isset($_POST['value'])){
-  $value = $_POST['value'];
-  // lucky btn choose random category for url
-  if ($value == "Feeling Lucky"){
-    $category_no = getRandomNumber();
-    error_log(print_r($value, true));
+$category_no = "";
 
-    // begin button add user chosen category to url
-  } else if ($value == "Begin"){
-    $category_no = $_POST['name'];
-    error_log(print_r($category_no, true));
-  } else {
-    error_log("Oops something's gone wrong");
+// check for post
+if (isset($_POST['categoryNo'])){
+  $category_no = $_POST['categoryNo'];
+  // lucky btn choose random category for url
+  if ($category_no == ""){
+    $category_no = getRandomNumber();
   }
 }
+
+error_log($category_no, true);
 
 // check $category_no != null
 if (isset($category_no)){

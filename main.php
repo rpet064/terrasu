@@ -2,22 +2,12 @@
 <?php
   include('header.php');
   include('navbar.php');
-  include("api.php");
-  include("test.php");
+  require("api.php");
+  require("test.php");
 ?>
 
 <!-- functions for greeting screen to game state transition -->
 <script>
-function getOptionValue(){
-    // checks if chosen option is null (no user selection)
-    if ($('#dropdown :selected').attr('value') != null){
-      var selectnCategoryNo = $('#dropdown :selected').attr('value')
-    } else {
-      var selectnCategoryNo = 22;
-    }
-    $("#begin-btn").attr("name", selectnCategoryNo);
-  }
-
     // hide greeting screen elements
     function hideElements(){
       $('button#begin-button').hide();
@@ -25,13 +15,39 @@ function getOptionValue(){
       $('div#select-container').hide();
     }
 
-    // show game elements in
+    // show game elements
     function showElements(){
       $('div[name="game-form"]').show();  
       $('div#question-container').show();
       $('div#scoreboard').show();
       $(`div#${questionCounter}`).show();
+      $("#class-div").attr("class", "game-card");
     }
+</script>
+
+<script>
+  // get data from select option
+  function getSelectData(){
+    var e = document.getElementById("dropdown");
+    if (e != null){
+    var value = e.value;
+    } else {
+      value = ""
+    }
+    return {categoryNo: value}
+  }
+
+  // post data to sever
+  function postData(data){
+    fetch("http://localhost:3000", {
+  method: "POST",
+  headers: {'Content-Type': 'application/json'}, 
+  body: JSON.stringify(data)
+}).then(res => {
+  console.log("Request complete! response:", res);
+});
+  }
+
 </script>
 
 <!-- global variables & functions for game state -->
@@ -72,10 +88,11 @@ function getOptionValue(){
   $(document).ready(function(){
     $('.begin-btn').click(function(event){
       event.preventDefault()
+      console.log(event);
       hideElements();
       showElements();
-      getOptionValue();
-      $("#class-div").attr("class", "game-card");
+      var selectedData = getSelectData();
+      postData(selectedData);
    });
   });
   </script>
@@ -152,32 +169,34 @@ function getOptionValue(){
   <h3 name='greet-title'> Please press begin to start </h3>
   <div id='select-container'>
     <select name="dropdown" id="dropdown" class="classic">
-      <!-- map dropbox data onto select-container -->
-    <script>
-      var quizDataOptions = <?PHP
-        echo json_encode($option_data['categories']) ?>;
-        var quizData = document.getElementById('dropdown').innerHTML = quizDataOptions.map(
-          item => 
-        `<option value=${item['category']}>${item['categoryName']}</option>`
-            ).join('');
-      </script> 
-    </select>
-    <form action="api.php" method="post">
-        <input
+        <!-- map dropbox data onto select-container -->
+        <script>
+          var quizDataOptions = <?PHP
+            echo json_encode($option_data['categories']) ?>;
+            var quizData = document.getElementById('dropdown').innerHTML = quizDataOptions.map(
+              item => 
+            `<option value=${item['category']}>${item['categoryName']}</option>`
+                ).join('');
+          </script> 
+        </select>
+      <button
           type="submit"
-          id='begin-btn'
+          id='submit-btn'
           class='begin-btn'
-          name="22"
-          value='Begin'/>
-      </form />
-      <form action="api.php" method="post">
-        <input
+          value="Feeling Lucky"
+          name="submit-btn"
+          />
+          Submit
+        </button>
+        <button
           type="submit"
           id='lucky-btn'
           class='begin-btn'
-          name="lucky-btn"
-          value="Feeling Lucky"/>
-        </form>
+          value="Feeling Lucky"
+          name="submit-btn"
+          />
+          I'm Feeling Lucky
+        </button>
     </div>
   <!-- scoreboard -->
   <div style="display:none" id="scoreboard">
@@ -217,7 +236,6 @@ function getOptionValue(){
     </div>
   </div>
   </div>
-
   <!-- button to play again -->
  <!-- <button id='reset-btn' type="submit" name="reset" 
       value="Reset" > Reset </button> -->
