@@ -2,7 +2,6 @@
 <?php
   include('header.php');
   include('navbar.php');
-  require("api.php");
   require("quizOptions.php");
 ?>
 
@@ -35,15 +34,25 @@
     return {categoryNo: value}
   }
 
-  // post data to sever
   function postData(data){
-    fetch("http://localhost:3000", {
-  method: "POST",
-  headers: {'Content-Type': 'application/json'}, 
-  body: JSON.stringify(data)
-}).then(res => {
-  console.log("Request complete! response:", res);
-});
+    // post data to sever
+    $.ajax({
+     url:'http://localhost:3000',
+     type:'post',
+     dataType:'json',
+     data:{ 
+         data
+     }, 
+     success:function(data) { 
+          console.log(data); 
+          alert(data.answers);
+          alert(data.questions);
+     }
+})
+  };
+
+  function includeAPIData(){
+    require("api.php");
   }
 
 </script>
@@ -70,16 +79,6 @@
   <style><?php include('./css/styles.css'); ?></style>
   <img src="https://picsum.photos/700/435" />
 
-  <!-- post data to sever -->
-  <!-- <script type="text/javascript"> 
-  function checkfunction(obj){
-    $.post("your_url.php",$(obj).serialize(),function(data){
-    alert("success");
-    });
-    return false;
-    }
-  </script> -->
-
   <!-- submit-btn control begin screen to game transition -->
   <script>
   $(document).ready(function(){
@@ -89,6 +88,7 @@
       showElements();
       var selectedData = getSelectData();
       postData(selectedData);
+      includeAPIData();
    });
   });
 
@@ -101,6 +101,7 @@
       // json blank so sever knows to insert random number
       var selectedData = {categoryNo: ""}
       postData(selectedData);
+      includeAPIData(); 
    });
   });
   </script>
@@ -215,23 +216,17 @@
   <!-- question container -->
   <div style="display:none" id='question-container'>
   <script>
-    // import answer api data from php sever echo into js variable
-    while (answerData === "" && questionData === ""){
-      var answerData = <?PHP
+    var answerData = <?PHP
           echo json_encode($answers);
-        ?>;
-      // import question api data from php sever echo into js variable
-      var questionData = <?PHP
-          echo json_encode($questions);
           ?>;
-      if (answerData !== "" && questionData !== ""){
-        const questionArray = document.getElementById('question-container').innerHTML = questionData.map(
-      (item, index) => 
-      `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
-            ).join('')
-      }
-    }
-    // map all question data into seperate divs
+        // import question api data from php sever echo into js variable
+        var questionData = <?PHP
+            echo json_encode($questions);
+            ?>;
+          const questionArray = document.getElementById('question-container').innerHTML = questionData.map(
+        (item, index) => 
+        `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
+              ).join('')
   </script> 
   </div>  
 

@@ -3,7 +3,7 @@
 <header>
       <nav>
         <div class="logo">
-          <img src="http://www.mrkzgulf.com/do.php?img=429440" />
+          <p id="logo">Terrasu<p>
         </div>
         <ul class="list-item">
             <button><i class="fab fa-github"><a href="https://github.com/rpet064"></a></i></button>

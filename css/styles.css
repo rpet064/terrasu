@@ -2,7 +2,7 @@
 
 body{
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@ img{
   z-index: -1;
   position: absolute;
   right: 22%;
-  top: 11%;
+  top: 14.5%;
 }
 
 button{
@@ -58,13 +58,20 @@ header {
 }
 
 .logo {
-  padding: 10px;
   width: auto;
   float: left;
 }
-.logo img {
-  height: 55px;
+
+#logo{
+  color: azure;
+  font-family: 'Silkscreen', cursive;
+  font-size: 1.3rem;
+  padding-left: 20%;
+  font-weight: bold;
+  position: relative;
+  bottom: 0.2rem;
 }
+
 .list-item {
   float: right;
   margin-right: 25px;
@@ -86,17 +93,16 @@ header {
   margin: 1rem 0;
   border-radius: 1rem;
   position: relative;
-  left: 26.5%;
+  left: 27.3%;
   width: 50%;
-  height: auto;
   background-color: white;
   z-index: 1;
-  top: 6rem;
+  top: 4.5rem;
   height: 18rem;
 }
 
 .card h3{
-  top: 2.7rem; 
+  top: 2.25rem; 
   position: relative;
 }
 
@@ -106,14 +112,16 @@ header {
 
 #select-container select{
   position: relative;
-  top: 1rem;
-  left: 2.3%;
+  top: 0.5rem;
+  left: 3%;
 }
 
 #select-container button{
   position: relative;
-  top: 4rem;
-  right: 15%;
+  display: block;
+  top: 1.5rem;
+  left: 43%;
+  margin-top: 1%;
 }
 
 select.classic {

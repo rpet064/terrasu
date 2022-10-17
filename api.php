@@ -52,6 +52,7 @@ if (isset($_POST['categoryNo'])) {
     $questions[] = $items['question'];
 
   }
-  
+  print_r($answers);
+  print_r($questions);
 }
  ?>
