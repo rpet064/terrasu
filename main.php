@@ -34,27 +34,35 @@
     return {categoryNo: value}
   }
 
-  function postData(data){
-    // post data to sever
-    $.ajax({
-     url:'http://localhost:3000',
-     type:'post',
-     dataType:'json',
-     data:{ 
-         data
-     }, 
-     success:function(data) { 
-          console.log(data); 
-          alert(data.answers);
-          alert(data.questions);
-     }
-})
-  };
-
-  function includeAPIData(){
-    require("api.php");
+  async function postData(data){
+    var response = await fetch('http://localhost:3000', {
+      Method: 'POST',
+      Headers: {
+        Accept: 'application.json',
+        'Content-Type': 'application/json'
+      },
+      Body: data,
+      Cache: 'default',
+    }
+    )
+    await response.text()
+    alert(response);
   }
 
+    // // post data to sever
+    // $.ajax({
+    //  url:'http://localhost:3000',
+    //  type:'post',
+    //  dataType:'json',
+    //  data:{ 
+    //      data
+    //  }, 
+    //  success:function(data) { 
+    //   alert(data);
+    //   var apiData 
+    //   alert(apiData);
+    //   }
+    // })
 </script>
 
 <!-- global variables & functions for game state -->
@@ -88,7 +96,6 @@
       showElements();
       var selectedData = getSelectData();
       postData(selectedData);
-      includeAPIData();
    });
   });
 
@@ -101,7 +108,6 @@
       // json blank so sever knows to insert random number
       var selectedData = {categoryNo: ""}
       postData(selectedData);
-      includeAPIData(); 
    });
   });
   </script>
@@ -216,19 +222,20 @@
   <!-- question container -->
   <div style="display:none" id='question-container'>
   <script>
-    var answerData = <?PHP
+      var answerData = <?PHP
           echo json_encode($answers);
           ?>;
         // import question api data from php sever echo into js variable
         var questionData = <?PHP
             echo json_encode($questions);
             ?>;
-          const questionArray = document.getElementById('question-container').innerHTML = questionData.map(
+          return document.getElementById('question-container').innerHTML = questionData.map(
         (item, index) => 
         `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
               ).join('')
-  </script> 
-  </div>  
+
+  </script>
+  </div>    
 
   <!-- form for users to share answers, reset game & post data when game is finished -->
     <div style="display:none" name='game-form'>

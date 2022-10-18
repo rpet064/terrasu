@@ -12,6 +12,7 @@ if(empty($_SERVER['CONTENT_TYPE']))
 }
 
 if (isset($_POST['categoryNo'])) {
+  echo 'api recieved';
   $curl = curl_init();
   $category_no = array();
 // check for post
@@ -52,7 +53,5 @@ if (isset($_POST['categoryNo'])) {
     $questions[] = $items['question'];
 
   }
-  print_r($answers);
-  print_r($questions);
 }
  ?>
