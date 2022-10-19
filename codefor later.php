@@ -42,4 +42,14 @@
   //   return false;
   //   }
 
-  const questionArray = 
+    var answerData = <?PHP
+          echo json_encode($answers);
+          ?>;
+        // import question api data from php sever echo into js variable
+        var questionData = <?PHP
+            echo json_encode($questions);
+            ?>;
+          return document.getElementById('question-container').innerHTML = questionData.map(
+        (item, index) => 
+        `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
+              ).join('')

@@ -1,29 +1,14 @@
 <?php
 
+$curl = curl_init();
+
 function getRandomNumber(){
   $min = 9;
   $max = 32;
   return rand($min, $max);
 }
 
-if(empty($_SERVER['CONTENT_TYPE']))
-{ 
-  $_SERVER['CONTENT_TYPE'] = "application/x-www-form-urlencoded"; 
-}
-
-if (isset($_POST['categoryNo'])) {
-  echo 'api recieved';
-  $curl = curl_init();
-  $category_no = array();
-// check for post
-  echo "post recieved";
-  $json  = $_POST["categoryNo"];
-  $category_no  = json_decode($json, true);
-  // lucky btn choose random category for url
-  if ($category_no === ""){
-      $category_no = getRandomNumber();
-    } 
-  print_r("https://opentdb.com/api.php?amount=10&category={$category_no}&type=boolean", true);
+$category_no = getRandomNumber();
 
   curl_setopt_array($curl, array(
     CURLOPT_URL => "https://opentdb.com/api.php?amount=10&category={$category_no}&type=boolean",
@@ -53,5 +38,5 @@ if (isset($_POST['categoryNo'])) {
     $questions[] = $items['question'];
 
   }
-}
+
  ?>

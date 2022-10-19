@@ -2,68 +2,8 @@
 <?php
   include('header.php');
   include('navbar.php');
-  require("quizOptions.php");
+  require('api.php')
 ?>
-
-<!-- functions for greeting screen to game state transition -->
-<script>
-    // hide greeting screen elements
-    function hideElements(){
-      $('button#begin-button').hide();
-      $('h3[name="greet-title"]').hide();
-      $('div#select-container').hide();
-    }
-
-    // show game elements
-    function showElements(){
-      $('div[name="game-form"]').show();  
-      $('div#question-container').show();
-      $('div#scoreboard').show();
-      $(`div#${questionCounter}`).show();
-      $("#class-div").attr("class", "game-card");
-    }
-</script>
-
-<script>
-  // get data from select option
-  function getSelectData(){
-    var e = document.getElementById("dropdown");
-    if (e != null){
-    var value = e.value;
-    } 
-    return {categoryNo: value}
-  }
-
-  async function postData(data){
-    var response = await fetch('http://localhost:3000', {
-      Method: 'POST',
-      Headers: {
-        Accept: 'application.json',
-        'Content-Type': 'application/json'
-      },
-      Body: data,
-      Cache: 'default',
-    }
-    )
-    await response.text()
-    alert(response);
-  }
-
-    // // post data to sever
-    // $.ajax({
-    //  url:'http://localhost:3000',
-    //  type:'post',
-    //  dataType:'json',
-    //  data:{ 
-    //      data
-    //  }, 
-    //  success:function(data) { 
-    //   alert(data);
-    //   var apiData 
-    //   alert(apiData);
-    //   }
-    // })
-</script>
 
 <!-- global variables & functions for game state -->
 <script>
@@ -82,6 +22,23 @@
     alert('Game is finished. Your score is ' + scoreCounter);
   }
 </script>
+
+<!-- functions for greeting screen to game state transition -->
+<script>
+    // hide greeting screen elements
+    function hideElements(){
+      $('button#begin-btn').hide();
+      $('h3[name="greet-title"]').hide();
+    }
+    // show game elements
+    function showElements(){
+      $('div[id="btn-container"]').show();  
+      $('div#question-container').show();
+      $('div#scoreboard').show();
+      $(`div#${questionCounter}`).show();
+      $("#class-div").attr("class", "game-card");
+    }
+</script>
   
 <!-- stylesheet & background image -->
   <style><?php include('./css/styles.css'); ?></style>
@@ -94,22 +51,9 @@
       event.preventDefault()
       hideElements();
       showElements();
-      var selectedData = getSelectData();
-      postData(selectedData);
    });
   });
 
-  // lucky-btn control begin screen to game transition
-  $(document).ready(function(){
-    $('.lucky-btn').click(function(event){
-      event.preventDefault()
-      hideElements();
-      showElements();
-      // json blank so sever knows to insert random number
-      var selectedData = {categoryNo: ""}
-      postData(selectedData);
-   });
-  });
   </script>
 
   <!-- control game reset -->
@@ -182,35 +126,13 @@
 <div id="class-div" class='card'>
   <h3 name='greet-title' > Welcome to Terrasu, a PHP Geography Quiz Game </h3>
   <h3 name='greet-title'> Please press begin to start </h3>
-  <div id='select-container'>
-    <select name="dropdown" id="dropdown" class="classic">
-        <!-- map dropbox data onto select-container -->
-        <script>
-          var quizDataOptions = <?PHP
-            echo json_encode($option_data['categories']) ?>;
-            var quizData = document.getElementById('dropdown').innerHTML = quizDataOptions.map(
-              item => 
-            `<option value=${item['category']}>${item['categoryName']}</option>`
-                ).join('');
-          </script> 
-        </select>
-      <button
-          type="submit"
-          id='submit-btn'
-          class='begin-btn'
-          value="Feeling Lucky"
-          name="submit-btn"
-          />
-          Submit
-        </button>
         <button
           type="submit"
-          id='lucky-btn'
+          id='begin-btn'
           class='begin-btn'
-          value="Feeling Lucky"
-          name="submit-btn"
+          name="begin-btn"
           />
-          I'm Feeling Lucky
+          Begin
         </button>
     </div>
   <!-- scoreboard -->
@@ -220,25 +142,24 @@
   </div>
 
   <!-- question container -->
-  <div style="display:none" id='question-container'>
-  <script>
-      var answerData = <?PHP
+  <div style="display:none" id='question-container' class='question-container'>
+    <script>
+        var answerData = <?PHP
           echo json_encode($answers);
           ?>;
         // import question api data from php sever echo into js variable
         var questionData = <?PHP
             echo json_encode($questions);
             ?>;
-          return document.getElementById('question-container').innerHTML = questionData.map(
+        const questionArray = document.getElementById('question-container').innerHTML = questionData.map(
         (item, index) => 
         `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
               ).join('')
-
-  </script>
+    </script>
   </div>    
 
   <!-- form for users to share answers, reset game & post data when game is finished -->
-    <div style="display:none" name='game-form'>
+    <div class='btn-container' id='btn-container' style="display:none" name='btn-div'>
       <button id='true-btn' type="submit" name="true"
                   value="true"> True </button>
             
