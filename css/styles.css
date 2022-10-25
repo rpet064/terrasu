@@ -25,9 +25,9 @@ button{
   background-color: #ffbd8d;
   border-radius: 10%;
   border: none;
-  box-shadow: 2px 2px grey;
-  width: 17%;
-  height: 2rem;
+  box-shadow: 2.5px 2.5px grey;
+  width: 19%;
+  height: 2.2rem;
 }
 
 button:hover, select:hover{
@@ -106,24 +106,31 @@ header {
 }
 
 .card h3{
-  top: 2.25rem; 
+  top: 3.25rem; 
   position: relative;
+}
+
+.grey-title{
+  color: grey;
 }
 
 #begin-btn{
   position: relative;
-  top: 4rem;
+  top: 4.75rem;
 }
 
 /* game card container */
 
 .game-card{
   left: 26.5%;
-  height: auto;
-  height: 18rem;
+  height: 17.8rem;
+} 
+
+.scoreboard h5{
+  display: inline-block;
 }
 
-#btn-container, #question-container, #scoreboard{
+#btn-container, #question-container, #scoreboard, #leaderboard-container{
   position: relative !important;
   bottom: 10rem !important;
   z-index: 10 !important;
@@ -133,7 +140,9 @@ header {
   display: block;
   text-align: center;
   margin: auto;
-  margin-top: 1.5%;
+  margin-top: 1%;
+  width: 7rem;
+  height: 40%;
 }
 
 /* footer */

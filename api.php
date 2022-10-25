@@ -36,7 +36,5 @@ $category_no = getRandomNumber();
   {
     $answers[] = $items['correct_answer'];
     $questions[] = $items['question'];
-
   }
-
  ?>

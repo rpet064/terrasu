@@ -5,11 +5,16 @@
   require('api.php')
 ?>
 
-<!-- global variables & functions for game state -->
+<!-- global variables-->
 <script>
-  var answers, questions = [];
-  var questionCounter, scoreCounter = 0;
-  var answerData, questionData = "";
+  var answers = [];
+  var questions = [];
+  var answerData = "";
+  var questionData = "";
+  var scoreCounter = 0;
+  var questionCounter = 0;
+
+  // functions for game state 
 
   function updateScore(){
     document.getElementById("question-counter").innerHTML = `Question ${questionCounter+1}`;
@@ -17,8 +22,12 @@
   }
 
   function endGame(){
-    $('div[name="game-form"]').hide();
+    // hide game elements & show end game elements
+    $('div[id="btn-container"]').hide();  
     $('div#question-container').hide();
+    $('div#scoreboard').hide();
+    $(`div#${questionCounter}`).hide();
+    $('div#leaderboard-container').show();
     alert('Game is finished. Your score is ' + scoreCounter);
   }
 </script>
@@ -72,7 +81,7 @@
       event.preventDefault()
         // change question
       $(`div#${questionCounter}`).hide();
-      $(`div#${questionCounter+1}`).show();
+      $(`div#${questionCounter}`).show();
       // check if user answer matches correct answer
       if (answerData[questionCounter] == "False"){
           alert('you got it right');
@@ -106,7 +115,7 @@
           alert('Sorry it was false');
         }
         // check if last question
-        if (questionCounter == 9){
+        if (questionCounter == 1){
           endGame();
       } else{
         questionCounter++;
@@ -125,7 +134,7 @@
 <!-- main container component  -->
 <div id="class-div" class='card'>
   <h3 name='greet-title' > Welcome to Terrasu, a PHP Geography Quiz Game </h3>
-  <h3 name='greet-title'> Please press begin to start </h3>
+  <h3 name='greet-title' class="grey-title"> Please press begin to start </h3>
         <button
           type="submit"
           id='begin-btn'
@@ -157,7 +166,6 @@
               ).join('')
     </script>
   </div>    
-
   <!-- form for users to share answers, reset game & post data when game is finished -->
     <div class='btn-container' id='btn-container' style="display:none" name='btn-div'>
       <button id='true-btn' type="submit" name="true"
@@ -167,13 +175,17 @@
                   value="false"> False </button>
     
       <button id='reset-btn' type="submit" name="reset" 
-      value="Reset" > Reset </button>
+      value="Reset"> Reset </button>
     </div>
   </div>
   </div>
   <!-- button to play again -->
- <!-- <button id='reset-btn' type="submit" name="reset" 
-      value="Reset" > Reset </button> -->
+  <div id="leaderboard-container" style="display:none">
+    <button id='leaderboard' type="submit" name="play-again" 
+    value="play-again" > leaderboard </button>
+    <button id='play-again' type="submit" name="play-again" 
+    value="play-again" > Play-Again </button>
+  </div>
 
 <?php
 $header = include('footer.php');
