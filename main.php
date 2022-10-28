@@ -17,8 +17,8 @@
   // functions for game state 
 
   function updateScore(){
-    document.getElementById("question-counter").innerHTML = `Question ${questionCounter+1}`;
-    document.getElementById("score-counter").innerHTML = `Your score is ${scoreCounter}`;
+    document.getElementById("question-counter").innerHTML = `Question: ${questionCounter+1}`;
+    document.getElementById("score-counter").innerHTML = `Score: ${scoreCounter}`;
   }
 
   function endGame(){
@@ -27,7 +27,7 @@
     $('div#question-container').hide();
     $('div#scoreboard').hide();
     $(`div#${questionCounter}`).hide();
-    $('div#leaderboard-container').show();
+    $('div#endgame-container').show();
     alert('Game is finished. Your score is ' + scoreCounter);
   }
 </script>
@@ -145,13 +145,13 @@
         </button>
     </div>
   <!-- scoreboard -->
-  <div style="display:none" id="scoreboard">
+  <div style="display:none" id="scoreboard" class='container'>
     <h5 id="question-counter">Question 1</h5> 
     <h5 id="score-counter">Your score is 0</h5> 
   </div>
 
   <!-- question container -->
-  <div style="display:none" id='question-container' class='question-container'>
+  <div style="display:none" id='question-container' class='container'>
     <script>
         var answerData = <?PHP
           echo json_encode($answers);
@@ -167,7 +167,7 @@
     </script>
   </div>    
   <!-- form for users to share answers, reset game & post data when game is finished -->
-    <div class='btn-container' id='btn-container' style="display:none" name='btn-div'>
+    <div class='container' id='btn-container' style="display:none" name='btn-div'>
       <button id='true-btn' type="submit" name="true"
                   value="true"> True </button>
             
@@ -180,11 +180,16 @@
   </div>
   </div>
   <!-- button to play again -->
-  <div id="leaderboard-container" style="display:none">
-    <button id='leaderboard' type="submit" name="play-again" 
-    value="play-again" > leaderboard </button>
-    <button id='play-again' type="submit" name="play-again" 
-    value="play-again" > Play-Again </button>
+  <div class='container' id="endgame-container" style="display:none">
+    <h3> Thanks for playing! Play Again? </h3>
+    <div>
+      <button class='endgame-header' id='leaderboard' type="submit" name="play-again" 
+      value="play-again" > leaderboard </button>
+    </div>
+    <div>
+      <button id='play-again' type="submit" name="play-again" 
+      value="play-again" > Again </button>
+    </div>
   </div>
 
 <?php

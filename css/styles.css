@@ -15,7 +15,6 @@ body{
   }
 
 img{
-  z-index: -1;
   position: absolute;
   right: 22%;
   top: 14.5%;
@@ -124,25 +123,36 @@ header {
 .game-card{
   left: 26.5%;
   height: 17.8rem;
+  top: 7rem;
 } 
 
 .scoreboard h5{
   display: inline-block;
 }
 
-#btn-container, #question-container, #scoreboard, #leaderboard-container{
+.container{
   position: relative !important;
-  bottom: 10rem !important;
+  bottom: 11rem !important;
   z-index: 10 !important;
 }
 
-#reset-btn, #true-btn, #false-btn{
+#endgame-container{
+  display:flex;
+  justify-content: center;
+  flex-direction: row;
+  height: auto;
+}
+
+#question-container{
+  padding-bottom: 1%;
+}
+
+#btn-container button{
   display: block;
   text-align: center;
   margin: auto;
-  margin-top: 1%;
-  width: 7rem;
-  height: 40%;
+  margin-top: 0.75%;
+  width: 8.5%;
 }
 
 /* footer */
