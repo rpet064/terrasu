@@ -120,7 +120,7 @@
           alert('Sorry it was false');
         }
         // check if last question
-        if (questionCounter == 1){
+        if (questionCounter == 9){
           endGame();
       } else{
         questionCounter++;
@@ -138,7 +138,7 @@
 
 <!-- main container component  -->
 <div id="class-div" class='card'>
-  <h3 name='greet-title' > Welcome to Terrasu, a PHP Geography Quiz Game </h3>
+  <h3 name='greet-title' > Welcome to Terrasu, a PHP Quiz Game </h3>
   <h3 name='greet-title' class="grey-title"> Please press begin to start </h3>
         <button
           type="submit"
@@ -152,8 +152,8 @@
     </div>
   <!-- scoreboard -->
   <div style="display:none" id="scoreboard" class='container'>
-    <h5 id="question-counter">Question 1</h5> 
-    <h5 id="score-counter">Score: 0</h5> 
+    <h3 id="question-counter">Question 1</h3> 
+    <h3 id="score-counter">Score: 0</h3> 
   </div>
 
   <!-- question container -->
@@ -182,22 +182,23 @@
   <button id='false-btn' type="submit" name="false"
             value="false" title="False"
                   > False </button>
-    
-  <button id='reset-btn' type="submit" name="reset" 
-              value="Reset" onClick="playAgain()" title="Reset"
-      > Reset </button>
+    <div>
+      <button id='reset-btn' type="submit" name="reset" 
+                  value="Reset" onClick="playAgain()" title="Reset"
+          > Reset </button>
+        </div>
     </div>
   </div>
 </div>
   <!-- button to play again -->
 <div class='container' id="endgame-container" style="display:none">
-    <h3> Thanks for playing! </h3>
-    <h3 class="grey-title" > Play Again? </h3>
-      <button onClick="playAgain()" class='endgame-header' id='leaderboard' 
+    <h1> Thanks for playing! </h3>
+    <h2 class="grey-title" > Play Again? </h2>
+      <button disabled onClick="playAgain()" class='endgame-header' id='leaderboard-btn' 
       type="submit" name="play-again" value="play-again" title="Leaderboard"
-      > leaderboard </button>
+      > Leaderboard </button>
       <button id='play-again' onClick="playAgain()" type="submit" name="play-again"
-      value="play-again" title="Again?"> Again? </button>
+      value="play-again" title="Again?"> Again </button>
 </div>
 
 <?php

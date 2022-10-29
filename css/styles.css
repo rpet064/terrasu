@@ -29,11 +29,16 @@ button{
   box-shadow: 2.5px 2.5px grey;
   width: 19%;
   height: 2.2rem;
+  color: black;
 }
 
 button:hover, select:hover{
   background-color: #CFFF8D;
   border-radius: 10%;
+}
+
+#leaderboard-btn button:hover, select:hover{
+  background-color: grey;
 }
 
 ul button{
@@ -75,7 +80,7 @@ header {
   padding-left: 20%;
   font-weight: bold;
   position: relative;
-  bottom: 0.2rem;
+  bottom: 0.225rem;
 }
 
 .list-item {
@@ -103,13 +108,14 @@ header {
   width: 50%;
   background-color: white;
   z-index: 1;
-  top: 4.5rem;
+  top: 2rem;
   height: 18rem;
 }
 
 .card h3{
   top: 3.25rem; 
   position: relative;
+  font-weight: bold;
 }
 
 .grey-title{
@@ -124,34 +130,53 @@ header {
 /* game card container */
 
 .game-card{
-  left: 27%;
-  height: 17.8rem;
+  left: 27.5%;
+  top: 3.25rem;
+  height: 19rem;
 }
 
 .container{
   position: relative !important;
-  bottom: 11rem !important;
+  bottom: 15rem;
   z-index: 10 !important;
+  margin: auto;
+  left: 1rem;
 }
 
-.scoreboard h5{
+#btn-container button{
+  width: 70%;
+  margin-top: 4%;
+  display: inline;
+}
+
+#reset-btn button{
+  display: block;
+}
+
+.scoreboard{
   display: inline-block;
+  font-size: 1.5em;
+  font-family: 'Roboto', sans-serif;  
+  position: relative;
+  bottom: 100rem;
 }
 
 #question-container{
   padding-bottom: 1%;
+  max-width: 44%;
 }
 
-#question-container div{
-  white-space: normal;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
+#endgame-container {
+  left: 2%;
+  bottom: 14rem;
 }
 
-#btn-container button{
-  width: 12%;
+#endgame-container button{
   display: block;
-  padding-top: 0.25%;
+  position: relative;
+  margin-top: 2.5%;
+  width: 50%;
+  margin-left: 22%;
 }
 
 /* footer */
@@ -160,13 +185,12 @@ footer{
   margin-top: auto;
    background-color: #CFFF8D;
    height: 3rem;
+   position: absolute;
+   width: 100%;
+   bottom: 0px; left: 0;
 }
 
 footer p{
   padding-top: 0.01%;
   font-size: 0.8rem;
 }
-
-/* .reset-btn {
-  background-color: red;
-} */
