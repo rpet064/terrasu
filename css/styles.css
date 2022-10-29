@@ -35,9 +35,10 @@ button{
 button:hover, select:hover{
   background-color: #CFFF8D;
   border-radius: 10%;
+  color: white;
 }
 
-#leaderboard-btn button:hover, select:hover{
+#leaderboard-btn:hover, select:hover{
   background-color: grey;
 }
 

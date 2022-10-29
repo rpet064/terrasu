@@ -4,7 +4,6 @@
   include('navbar.php');
   require('api.php')
 ?>
-
 <!-- global variables-->
 <script>
   var answers = [];
@@ -16,16 +15,15 @@
 
   // functions for game state 
 </script>
+
 <script>
-
-
   function updateScore(){
     document.getElementById("question-counter").innerHTML = `Question: ${questionCounter+1}`;
     document.getElementById("score-counter").innerHTML = `Score: ${scoreCounter}`;
   }
 </script>
-<script>
 
+<script>
   function endGame(){
     // hide game elements & show end game elements
     $('div[id="btn-container"]').hide();  
@@ -79,14 +77,13 @@
   }
 </script>
 
-<script>
-  // control user false answer guess
-  $(document).ready(function(){
+  <script>
+    $(document).ready(function(){
     $('#false-btn').click(function(event){
       event.preventDefault()
         // change question
       $(`div#${questionCounter}`).hide();
-      $(`div#${questionCounter}`).show();
+      $(`div#${questionCounter+1}`).show();
       // check if user answer matches correct answer
       if (answerData[questionCounter] == "False"){
           alert('you got it right');
@@ -102,9 +99,7 @@
       }
    });
   });
-</script>
 
-<script>
   // control true answer guess
   $(document).ready(function(){
     $('#true-btn').click(function(event){
@@ -128,6 +123,7 @@
       }
    });
   });
+  
 </script>
 
 <script>
@@ -175,12 +171,12 @@
   <!-- form for users to share answers, reset game & post data when game is finished -->
 <div class='container' id='btn-container' style="display:none" name='btn-div'>
   <button id='true-btn' type="submit" name="true"
-              value="true" title="True"
+              value="true" title="True" onClick="checkAnswer('True')"
                   > True 
                 </button>
             
   <button id='false-btn' type="submit" name="false"
-            value="false" title="False"
+            value="false" title="False" onClick="checkAnswer('False')"
                   > False </button>
     <div>
       <button id='reset-btn' type="submit" name="reset" 

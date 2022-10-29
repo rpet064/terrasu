@@ -53,3 +53,25 @@
         (item, index) => 
         `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
               ).join('')
+
+                // $(document).ready(function(){
+  //   $('#false-btn').click(function(event){
+  //     event.preventDefault()
+  //       // change question
+  //     $(`div#${questionCounter}`).hide();
+  //     $(`div#${questionCounter}`).show();
+  //     // check if user answer matches correct answer
+  //     if (answerData[questionCounter] == "False"){
+  //         alert('you got it right');
+  //         scoreCounter++;
+  //       } else{
+  //         alert('Sorry it was true');
+  //       }
+  //       if (questionCounter == 9){
+  //         endGame();
+  //     } else {
+  //       questionCounter++;
+  //       updateScore();
+  //     }
+  //  });
+  // });
