@@ -15,11 +15,16 @@
   var questionCounter = 0;
 
   // functions for game state 
+</script>
+<script>
+
 
   function updateScore(){
     document.getElementById("question-counter").innerHTML = `Question: ${questionCounter+1}`;
     document.getElementById("score-counter").innerHTML = `Score: ${scoreCounter}`;
   }
+</script>
+<script>
 
   function endGame(){
     // hide game elements & show end game elements
@@ -39,6 +44,9 @@
       $('button#begin-btn').hide();
       $('h3[name="greet-title"]').hide();
     }
+
+</script>
+<script>
     // show game elements
     function showElements(){
       $('div[id="btn-container"]').show();  
@@ -50,11 +58,11 @@
 </script>
   
 <!-- stylesheet & background image -->
-  <style><?php include('./css/styles.css'); ?></style>
-  <img src="https://picsum.photos/700/435" />
+<style><?php include('./css/styles.css'); ?></style>
+<img src="https://picsum.photos/700/400" />
 
   <!-- submit-btn control begin screen to game transition -->
-  <script>
+<script>
   $(document).ready(function(){
     $('.begin-btn').click(function(event){
       event.preventDefault()
@@ -62,20 +70,17 @@
       showElements();
    });
   });
-
-  </script>
+</script>
 
   <!-- control game reset -->
-  <script>
-  $(document).ready(function(){
-    $('#reset-btn').click(function(event){
-      window.location.reload();
-   });
-  });
-  </script>
-
-  <!-- control user false answer guess -->
 <script>
+  function playAgain(){
+    window.location.reload();
+  }
+</script>
+
+<script>
+  // control user false answer guess
   $(document).ready(function(){
     $('#false-btn').click(function(event){
       event.preventDefault()
@@ -97,10 +102,10 @@
       }
    });
   });
-  </script>
+</script>
 
-  <!-- control true answer guess -->
 <script>
+  // control true answer guess
   $(document).ready(function(){
     $('#true-btn').click(function(event){
       event.preventDefault()
@@ -123,7 +128,7 @@
       }
    });
   });
-  </script>
+</script>
 
 <script>
     if ( window.history.replaceState ) {
@@ -140,6 +145,7 @@
           id='begin-btn'
           class='begin-btn'
           name="begin-btn"
+          title="begin"
           />
           Begin
         </button>
@@ -147,12 +153,12 @@
   <!-- scoreboard -->
   <div style="display:none" id="scoreboard" class='container'>
     <h5 id="question-counter">Question 1</h5> 
-    <h5 id="score-counter">Your score is 0</h5> 
+    <h5 id="score-counter">Score: 0</h5> 
   </div>
 
   <!-- question container -->
-  <div style="display:none" id='question-container' class='container'>
-    <script>
+<div style="display:none" id='question-container' class='container'>
+  <script>
         var answerData = <?PHP
           echo json_encode($answers);
           ?>;
@@ -164,33 +170,35 @@
         (item, index) => 
         `<div style="display:none" id=${index} class='question'>${item} True or False?</div>`
               ).join('')
-    </script>
-  </div>    
+</script>
+</div>    
   <!-- form for users to share answers, reset game & post data when game is finished -->
-    <div class='container' id='btn-container' style="display:none" name='btn-div'>
-      <button id='true-btn' type="submit" name="true"
-                  value="true"> True </button>
+<div class='container' id='btn-container' style="display:none" name='btn-div'>
+  <button id='true-btn' type="submit" name="true"
+              value="true" title="True"
+                  > True 
+                </button>
             
-    <button id='false-btn' type="submit" name="false"
-                  value="false"> False </button>
+  <button id='false-btn' type="submit" name="false"
+            value="false" title="False"
+                  > False </button>
     
-      <button id='reset-btn' type="submit" name="reset" 
-      value="Reset"> Reset </button>
+  <button id='reset-btn' type="submit" name="reset" 
+              value="Reset" onClick="playAgain()" title="Reset"
+      > Reset </button>
     </div>
   </div>
-  </div>
+</div>
   <!-- button to play again -->
-  <div class='container' id="endgame-container" style="display:none">
-    <h3> Thanks for playing! Play Again? </h3>
-    <div>
-      <button class='endgame-header' id='leaderboard' type="submit" name="play-again" 
-      value="play-again" > leaderboard </button>
-    </div>
-    <div>
-      <button id='play-again' type="submit" name="play-again" 
-      value="play-again" > Again </button>
-    </div>
-  </div>
+<div class='container' id="endgame-container" style="display:none">
+    <h3> Thanks for playing! </h3>
+    <h3 class="grey-title" > Play Again? </h3>
+      <button onClick="playAgain()" class='endgame-header' id='leaderboard' 
+      type="submit" name="play-again" value="play-again" title="Leaderboard"
+      > leaderboard </button>
+      <button id='play-again' onClick="playAgain()" type="submit" name="play-again"
+      value="play-again" title="Again?"> Again? </button>
+</div>
 
 <?php
 $header = include('footer.php');
