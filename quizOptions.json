@@ -1,0 +1,45 @@
+{ 
+    "categories": [ 
+            {
+            "category": 11,
+            "categoryName": "Film"
+            },
+            {
+            "category": 12,
+            "categoryName":"Music"
+            },
+            {
+            "category": 15,
+            "categoryName":"Video Games"
+            },
+            {
+            "category": 18,
+            "categoryName":"Computers"
+            },
+            {
+            "category": 21,
+            "categoryName":"Sports"
+            },
+            {
+            "category": 22,
+            "categoryName":"Geography"
+            },
+            {
+            "category": 23,
+            "categoryName":"History"
+            },
+            {
+            "category": 27,
+            "categoryName":"Animals"
+            },
+            {
+            "category": 28,
+            "categoryName":"Vehicles"
+            },
+            {
+            "category": 31,
+            "categoryName":"Anime"
+            }
+    
+    ]
+ }
